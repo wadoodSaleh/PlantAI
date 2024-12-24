@@ -21,12 +21,16 @@ if (isset($_SESSION['output'])) {
 
     // Normalize the output by replacing triple underscores with a space for visual display
     $display_output = str_replace("___", " ", $trimmed_output);
-
-    // Display the TensorFlow model output
-    echo "Result from TensorFlow model: " . $display_output . "<br>";
-
+    $plant_name = explode("___", $trimmed_output)[0]; 
+    
     // Define the SQL query template
     $sql_template = "SELECT * FROM plantcare WHERE plant_name = '%s' AND plant_condition = '%s'";
+
+    // Create the path for the image based on plant name
+    $image_path = 'outputs/' . str_replace(' ', '_', $plant_name) . '.jpg';
+
+    // Display the image
+    echo "<img src='" . $image_path . "' alt='" . $plant_name . "' style='width:200px;'><br>";
 
     // Handle multiple class conditions
     if ($trimmed_output === "Apple___Apple_scab") {

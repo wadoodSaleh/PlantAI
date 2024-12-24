@@ -1,1 +1,1 @@
-print("Potato___Early_blight")
+print("Strawberry___healthy")
