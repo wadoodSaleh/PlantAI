@@ -1,17 +1,5 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";  // Adjust if necessary
-$password = "";      // Adjust if necessary
-$dbname = "plant_id";  // Replace with your database name
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start(); // Start the session at the beginning
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Overwrite any existing file named "leaf.jpg"
         if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
-            echo "Error uploading file.";
+            $_SESSION['output'] = "Error uploading file.";
+            header('Location: result.php');
             exit;
         }
 
@@ -37,16 +26,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $output = shell_exec($command);
 
         if ($output === null) {
-            echo "Error: Failed to execute Python script.";
+            $_SESSION['output'] = "Error: Failed to execute Python script.";
         } else {
-            echo $output; 
+            $_SESSION['output'] = $output;
         }
+        
+        // Redirect to result.php to display the output
+        header('Location: result.php');
+        exit;
     } else {
-        echo "Error: " . $_FILES["fileToUpload"]["error"];
+        $_SESSION['output'] = "Error: " . $_FILES["fileToUpload"]["error"];
+        header('Location: result.php');
+        exit;
     }
 } else {
-    echo "Invalid request.";
+    $_SESSION['output'] = "Invalid request.";
+    header('Location: result.php');
+    exit;
 }
-
-$conn->close();
 ?>

@@ -1,0 +1,1 @@
+print("Potato___Early_blight")

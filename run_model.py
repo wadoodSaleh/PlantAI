@@ -22,7 +22,7 @@ def predict(model, img, class_names):
     return predicted_class, confidence
 
 # Load the model
-MODEL = tf.keras.models.load_model("C:\\xampp\\htdocs\\plant_AI_bio\\tensorflow_model.h5")
+MODEL = tf.keras.models.load_model("C:\\xampp\\htdocs\\plant_AI_bio\\2")
 
 # Define class names
 class_names = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
@@ -48,9 +48,6 @@ except Exception as e:
 # Perform prediction
 predicted_class, confidence = predict(MODEL, image, class_names)
 
-# Output HTML to display the results
-print(f"<html><body>")
-print(f"<h3>Prediction: {predicted_class}</h3>")
-print(f"<h3>Confidence: {confidence}%</h3>")
-print(f'<img src="/plant_AI_bio/outputs/processed_leaf.jpg" alt="Processed Image">')
-print(f"</body></html>")
+# Output 
+print(f"Prediction: {predicted_class}")
+print(f"Confidence: {confidence}%")
